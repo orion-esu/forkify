@@ -22,6 +22,14 @@ export const state = {
   bookmarks: [],
 };
 
+if (window.innerWidth < 800) {
+  document.querySelector('.container').style.display = 'none';
+  document.querySelector('.unresponsive').classList.remove('hidden');
+} else {
+  document.querySelector('.container').style.display = 'grid';
+  document.querySelector('.unresponsive').classList.add('hidden');
+}
+
 const createRecipeObject = function (data) {
   const { recipe } = data.data;
 
@@ -227,18 +235,6 @@ export const getIngredient = async function (recipe) {
 };
 retrieveData();
 
-// window resize event listener
-window.addEventListener('resize', function (e) {
-  console.log(e);
-  if (window.innerWidth < 800) {
-    document.querySelector('.container').style.display = 'none';
-    document.querySelector('.unresponsive').classList.remove('hidden');
-  } else {
-    document.querySelector('.container').style.display = 'grid';
-    document.querySelector('.unresponsive').classList.add('hidden');
-  }
-});
-// Generate a random id
 
 // LIstening for events in mvc using the publisher subscriber pattern. Events should be handled in the controller and should be listened for in the view otherwise DOM elements would be needed in the controller which would be bad practice.
 

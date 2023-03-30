@@ -1,4 +1,3 @@
-import icons from 'url:../../img/icons.svg';
 import View from './views';
 import previewView from './previewView';
 
@@ -30,7 +29,6 @@ class ResultsView extends View {
   //     </li>
   // `;
   //   }
-
   #generateMarkup() {
     return this.returnData
       .map(result => previewView.render(result, false))

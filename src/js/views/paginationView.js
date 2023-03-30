@@ -15,6 +15,11 @@ class PaginationView extends View {
     });
   }
 
+  /**
+   * 
+   * @returns {string} Returns a string of markup
+
+   */
   #generateMarkup() {
     const curPage = this.returnData.page;
     const numPags = Math.ceil(
@@ -23,19 +28,24 @@ class PaginationView extends View {
 
     // Page 1, and there are other pages
     if (curPage === 1 && numPags > 1) {
-      return this.#generateMarkupButton(curPage, 'next');
+      return (
+        this.#generateTotalPages() + this.#generateMarkupButton(curPage, 'next')
+      );
     }
 
     // last
     if (curPage === numPags && numPags > 1) {
-      return this.#generateMarkupButton(curPage, 'prev');
+      return (
+        this.#generateTotalPages() + this.#generateMarkupButton(curPage, 'prev')
+      );
     }
 
     // others
     if (curPage < numPags) {
       return (
-        this.#generateMarkupButton(curPage, 'next') +
-        this.#generateMarkupButton(curPage, 'prev')
+        this.#generateTotalPages() +
+        this.#generateMarkupButton(curPage, 'prev') +
+        this.#generateMarkupButton(curPage, 'next')
       );
     }
   }
@@ -45,13 +55,27 @@ class PaginationView extends View {
       <button data-goto="${
         type === 'next' ? page + 1 : page - 1
       }" class="btn--inline pagination__btn--${type}">
+      <svg class="search__icon">
+            <use href="${icons}#icon-arrow-${
+      type === 'prev' ? 'left' : ''
+    }"></use>
+          </svg>
           <span>Page ${type === 'next' ? page + 1 : page - 1}</span>
+         
           <svg class="search__icon">
               <use href="${icons}#icon-arrow-${
-      type === 'next' ? 'right' : 'left'
+      type === 'next' ? 'right' : ''
     }"></use>
           </svg>
       </button>
+    `;
+  }
+
+  #generateTotalPages() {
+    return `
+      <p class="pagination__text">
+        Page ${this.returnData.page} of ${this.returnData.totalNumOfPages}
+      </p>
     `;
   }
 

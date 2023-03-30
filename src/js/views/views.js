@@ -12,6 +12,7 @@ export default class View {
    * @this {Object} View instance
    */
   render(data, render = true) {
+    console.log(data);
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
 
@@ -52,6 +53,8 @@ export default class View {
       ) {
         // curEl = element already on the page
         // console.log(curEl, newEl.isEqualNode(curEl));
+
+        if (newEl.textContent.includes('contains NaN')) return;
         curEl.textContent = newEl.textContent;
       }
 

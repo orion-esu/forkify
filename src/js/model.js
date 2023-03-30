@@ -1,5 +1,14 @@
 import { async } from 'regenerator-runtime';
-import { API_URL, RES_PER_PAGE, KEY } from './config';
+import {
+  API_URL,
+  RES_PER_PAGE,
+  KEY,
+  KEY_ORIONESU,
+  KEY_ORION2001,
+  KEY_ESUGABRIEL,
+  KEY__JAJA,
+  KEY__PRINCE,
+} from './config';
 import { AJAX } from './helper';
 
 export const state = {
@@ -38,6 +47,7 @@ export const loadRecipe = async function (id) {
     if (state.bookmarks.some(bookmark => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
+    // getIngredient(state.recipe);
   } catch (error) {
     console.error(`${error} 2.`);
     throw error;
@@ -71,12 +81,19 @@ export const getSearchResultPage = function (page = state.search.page) {
   const start = (page - 1) * RES_PER_PAGE; //0;
   const end = page * RES_PER_PAGE; //10
 
+  state.search.totalNumOfPages = Math.ceil(
+    state.search.results.length / RES_PER_PAGE
+  );
   return state.search.results.slice(start, end);
 };
 
 export const updateServings = function (newservings) {
   state.recipe.ingredients.forEach(ing => {
     ing.quantity = (ing.quantity * newservings) / state.recipe.servings;
+    ing.calories = (
+      (ing.calories * newservings) /
+      state.recipe.servings
+    ).toFixed(2);
 
     // nQT = (oQT * nServ) / oServ;
   });
@@ -116,21 +133,57 @@ const retrieveData = function () {
   if (data) state.bookmarks = JSON.parse(data);
 };
 
+const generateIngredients = function (ingredients) {
+  // console.log(ingredients);
+  // const obj = [];
+  // ingredients.forEach((el, index) => {
+  //   const buts = ingredients.filter(([description]) =>
+  //     description.includes(`ingredient-${index + 1}`)
+  //   );
+  //   if (buts.length === 0) return;
+  //   const butsMap = buts.map(([, value]) => value);
+  //   obj.push(butsMap);
+  // });
+  // console.log(obj);
+  // return obj;
+
+  /* For one element */
+  // ingredients
+  //   .filter(([description]) => description.includes(`ingredient-${ingNo}`))
+  //   .map(([, value]) => value);
+
+  return ingredients.reduce((acc, _, index) => {
+    const buts = ingredients
+      .filter(([desc]) => desc.includes(`ingredient-${index + 1}`))
+      .map(([, val]) => val);
+    return buts.length > 0 ? [...acc, buts] : acc;
+  }, []);
+};
+
 export const uploadRecipe = async function (newRecipe) {
   try {
-    const ingredients = Object.entries(newRecipe)
-      .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
-      .map(ing => {
-        const ingArr = ing[1].split(',');
+    const ingredients = generateIngredients(
+      Object.entries(newRecipe).filter(
+        entry => entry[0].startsWith('ingredient') && entry[1] !== ''
+      )
+    ).map(ing => {
+      if (ing.length !== 3)
+        throw new Error(
+          'Wrong ingredient format! Please use the correct format.'
+        );
+      const [quantity, unit, description] = ing;
+      return { quantity: quantity ? +quantity : null, unit, description };
+    });
+    // const generatedIngredients = generateIngredients(filterIngredients);
 
-        if (ingArr.length !== 3)
-          throw new Error(
-            'Wrong ingredient format! Please use the correct format.'
-          );
-
-        const [quantity, unit, description] = ingArr;
-        return { quantity: quantity ? +quantity : null, unit, description };
-      });
+    // generatedIngredients.map(ing => {
+    //   if (ing.length !== 3)
+    //     throw new Error(
+    //       'Wrong ingredient format! Please use the correct format.'
+    //     );
+    //   const [quantity, unit, description] = ing;
+    //   return { quantity: quantity ? +quantity : null, unit, description };
+    // });
 
     const recipe = {
       publisher: newRecipe.publisher,
@@ -141,16 +194,51 @@ export const uploadRecipe = async function (newRecipe) {
       title: newRecipe.title,
       ingredients,
     };
-
+    getIngredient(recipe);
     const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
     state.recipe = createRecipeObject(data);
+
     addBookmark(state.recipe);
   } catch (error) {
     throw error;
   }
 };
 
+export const getIngredient = async function (recipe) {
+  try {
+    for (const ing of recipe.ingredients) {
+      const data = await AJAX(
+        `https://api.spoonacular.com/food/ingredients/search?apiKey=${KEY_ESUGABRIEL}&query=${ing.description}`
+      );
+      if (data.results.length !== 0) {
+        const id = data.results[0].id;
+        const ingredientNutrient = await AJAX(
+          `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${KEY_ESUGABRIEL}&amount=${recipe.servings}`
+        );
+        const nutrients = ingredientNutrient.nutrition.nutrients;
+
+        const butIng = nutrients.filter(nutr => nutr.name === 'Calories');
+        ing.calories = butIng[0].amount;
+      }
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 retrieveData();
+
+// window resize event listener
+window.addEventListener('resize', function (e) {
+  console.log(e);
+  if (window.innerWidth < 800) {
+    document.querySelector('.container').style.display = 'none';
+    document.querySelector('.unresponsive').classList.remove('hidden');
+  } else {
+    document.querySelector('.container').style.display = 'grid';
+    document.querySelector('.unresponsive').classList.add('hidden');
+  }
+});
+// Generate a random id
 
 // LIstening for events in mvc using the publisher subscriber pattern. Events should be handled in the controller and should be listened for in the view otherwise DOM elements would be needed in the controller which would be bad practice.
 

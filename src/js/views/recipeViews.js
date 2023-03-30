@@ -129,6 +129,7 @@ class recipeViews extends View {
   }
 
   #generateMarkupIngredient(ing) {
+    console.log(ing.calories);
     return `
     <li class="recipe__ingredient">
       <svg class="recipe__icon">
@@ -138,7 +139,15 @@ class recipeViews extends View {
       <div class="recipe__description">
         <span class="recipe__unit">${ing.unit}</span>
         ${ing.description}
+        <span class="recipe__ingredient--calories">
+          ${
+            ing.calories !== undefined || NaN
+              ? `- contains ${ing.calories} calories`
+              : ''
+          }
+        </span>
       </div>
+      
     </li>
   `;
   }

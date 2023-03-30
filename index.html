@@ -236,7 +236,6 @@
         -->
       </div>
     </div>
-
     <div class="overlay hidden"></div>
     <div class="add-recipe-window hidden">
       <button class="btn--close-modal">&times;</button>
@@ -244,61 +243,150 @@
         <div class="upload__column">
           <h3 class="upload__heading">Recipe data</h3>
           <label>Title</label>
-          <input value="TEST233" required name="title" type="text" />
+          <input
+            value=""
+            required
+            name="title"
+            type="text"
+            class="upload__input"
+          />
           <label>URL</label>
-          <input value="TEST233" required name="sourceUrl" type="text" />
+          <input
+            value=""
+            required
+            name="sourceUrl"
+            type="text"
+            class="upload__input"
+          />
           <label>Image URL</label>
-          <input value="google.com" required name="image" type="text" />
+          <input
+            value=""
+            required
+            name="image"
+            type="text"
+            class="upload__input"
+          />
           <label>Publisher</label>
-          <input value="TEST233" required name="publisher" type="text" />
+          <input
+            value=""
+            required
+            name="publisher"
+            type="text"
+            class="upload__input"
+          />
           <label>Prep time</label>
-          <input value="23" required name="cookingTime" type="number" />
+          <input
+            value=""
+            required
+            name="cookingTime"
+            type="number"
+            class="upload__input"
+          />
           <label>Servings</label>
-          <input value="23" required name="servings" type="number" />
+          <input
+            value=""
+            required
+            name="servings"
+            type="number"
+            class="upload__input"
+          />
         </div>
 
         <div class="upload__column">
           <h3 class="upload__heading">Ingredients</h3>
           <label>Ingredient 1</label>
-          <input
-            value="0.5,kg,Rice"
-            type="text"
-            required
-            name="ingredient-1"
-            placeholder="Format: 'Quantity,Unit,Description'"
-          />
+          <div class="upload__column--container">
+            <input
+              value=""
+              type="text"
+              required
+              name="ingredient-1-quantity"
+              placeholder="Quantity"
+            />
+            <input
+              value=""
+              type="text"
+              required
+              name="ingredient-1-unit"
+              placeholder="Unit"
+            />
+            <input
+              value=""
+              type="text"
+              required
+              name="ingredient-1-description"
+              placeholder="Description"
+            />
+          </div>
           <label>Ingredient 2</label>
-          <input
-            value="1,,Avocado"
-            type="text"
-            name="ingredient-2"
-            placeholder="Format: 'Quantity,Unit,Description'"
-          />
+          <div class="upload__column--container">
+            <input
+              value=""
+              type="text"
+              name="ingredient-2-quantity"
+              placeholder="Quantity"
+            />
+            <input type="text" name="ingredient-2-unit" placeholder="Unit" />
+            <input value="" type="text" name="ingredient-2-description"
+            placeholder=Description" />
+          </div>
           <label>Ingredient 3</label>
-          <input
-            value=",,salt"
-            type="text"
-            name="ingredient-3"
-            placeholder="Format: 'Quantity,Unit,Description'"
-          />
+          <div class="upload__column--container">
+            <input
+              type="text"
+              name="ingredient-3-quantity"
+              placeholder="Quantity"
+            />
+            <input type="text" name="ingredient-3-unit" placeholder="Unit" />
+            <input
+              value=""
+              type="text"
+              name="ingredient-3-description"
+              placeholder="Description"
+            />
+          </div>
           <label>Ingredient 4</label>
-          <input
-            type="text"
-            name="ingredient-4"
-            placeholder="Format: 'Quantity,Unit,Description'"
-          />
+          <div class="upload__column--container">
+            <input
+              type="text"
+              name="ingredient-4-quantity"
+              placeholder="Quantity"
+            />
+            <input type="text" name="ingredient-4-unit" placeholder="Unit" />
+            <input
+              type="text"
+              name="ingredient-4-description"
+              placeholder="Description"
+            />
+          </div>
           <label>Ingredient 5</label>
-          <input
-            type="text"
-            name="ingredient-5"
-            placeholder="Format: 'Quantity,Unit,Description'"
-          />
+          <div class="upload__column--container">
+            <input
+              type="text"
+              name="ingredient-5-quantity"
+              placeholder="Quantity"
+            />
+            <input type="text" name="ingredient-5-unit" placeholder="Unit" />
+            <input
+              type="text"
+              name="ingredient-5-description"
+              placeholder="Description"
+            />
+          </div>
           <label>Ingredient 6</label>
-          <input
-            type="text"
-            name="ingredient-6"
-            placeholder="Format: 'Quantity,Unit,Description'"
-          />
+          <div class="upload__column--container">
+            <input
+              type="text"
+              name="ingredient-6-quantity"
+              placeholder="Quantity"
+            />
+            <input type="text" name="ingredient-6-unit" placeholder="Unit" />
+            <input
+              type="text"
+              name="ingredient-6-description"
+              placeholder="Description"
+            />
+          </div>
         </div>
 
         <button class="btn upload__btn">
@@ -308,6 +396,16 @@
           <span>Upload</span>
         </button>
       </form>
+    </div>
+
+    <div class="unresponsive hidden">
+      <img
+        src="./src/img/qforce-stat.gif"
+        alt="unresponsive"
+      />
+      <h1 class="unresponsive__header">
+        Sorry, this site isn't optimized for mobile devices yet :-)
+      </h1>
     </div>
   </body>
 </html>

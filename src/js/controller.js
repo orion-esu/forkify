@@ -38,6 +38,9 @@ const controlRecipes = async function () {
     // 1.) Load Recipe
     await model.loadRecipe(id);
 
+    // Getingredients
+    await model.getIngredient(model.state.recipe);
+
     // 2.) Render Recipie
     recipeViews.render(model.state.recipe);
 
@@ -79,7 +82,6 @@ const controlPagination = function (gotoPage) {
 };
 
 const controlServings = function (newServings) {
-  console.log(newServings);
 
   // Update recipie servings in state
   model.updateServings(newServings);
@@ -118,6 +120,9 @@ const controlUpload = async function (newRecipe) {
     addRecipeView.renderSpinner();
 
     await model.uploadRecipe(newRecipe);
+
+    // getIngredient(state.recipe);
+    await model.getIngredient(model.state.recipe);
 
     // Render recipe
     recipeViews.render(model.state.recipe);

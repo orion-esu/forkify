@@ -13,20 +13,28 @@
 
 .pagination {
   margin-top: auto;
-  padding: 0 3.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-inline: 2rem;
 
-  &::after {
-    content: '';
-    display: table;
-    clear: both;
+  &__text {
+    padding: 0 3rem;
+    color: #f48982;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 2.5rem;
+    grid-column: 1/-1;
+    justify-self: center;
   }
 
   &__btn {
     &--prev {
-      float: left;
+      grid-column: 1/2;
+      justify-self: flex-start;
     }
     &--next {
-      float: right;
+      grid-column: 2/3;
+      justify-self: flex-end;
     }
   }
 }

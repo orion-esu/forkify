@@ -22,13 +22,18 @@ export const state = {
   bookmarks: [],
 };
 
-if (window.innerWidth < 800) {
-  document.querySelector('.container').style.display = 'none';
-  document.querySelector('.unresponsive').classList.remove('hidden');
-} else {
-  document.querySelector('.container').style.display = 'grid';
-  document.querySelector('.unresponsive').classList.add('hidden');
-}
+const windowResize = function () {
+  if (window.innerWidth < 800) {
+    document.querySelector('.container').style.display = 'none';
+    document.querySelector('.unresponsive').classList.remove('hidden');
+  } else {
+    document.querySelector('.container').style.display = 'grid';
+    document.querySelector('.unresponsive').classList.add('hidden');
+  }
+};
+windowResize();
+
+window.addEventListener('resize', windowResize);
 
 const createRecipeObject = function (data) {
   const { recipe } = data.data;
@@ -216,12 +221,12 @@ export const getIngredient = async function (recipe) {
   try {
     for (const ing of recipe.ingredients) {
       const data = await AJAX(
-        `https://api.spoonacular.com/food/ingredients/search?apiKey=${KEY_ESUGABRIEL}&query=${ing.description}`
+        `https://api.spoonacular.com/food/ingredients/search?apiKey=${KEY__JAJA}&query=${ing.description}`
       );
       if (data.results.length !== 0) {
         const id = data.results[0].id;
         const ingredientNutrient = await AJAX(
-          `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${KEY_ESUGABRIEL}&amount=${recipe.servings}`
+          `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${KEY__JAJA}&amount=${recipe.servings}`
         );
         const nutrients = ingredientNutrient.nutrition.nutrients;
 
@@ -234,7 +239,6 @@ export const getIngredient = async function (recipe) {
   }
 };
 retrieveData();
-
 
 // LIstening for events in mvc using the publisher subscriber pattern. Events should be handled in the controller and should be listened for in the view otherwise DOM elements would be needed in the controller which would be bad practice.
 

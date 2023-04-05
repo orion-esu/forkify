@@ -46,7 +46,8 @@ const controlRecipes = async function () {
 
     // controlServings(8);
   } catch (error) {
-    recipeViews.renderError();
+    const message = error.message.includes('402') ? 'API KEY EXPIRED' : '';
+    recipeViews.renderError(message);
     console.error(error);
   }
 };
@@ -82,7 +83,6 @@ const controlPagination = function (gotoPage) {
 };
 
 const controlServings = function (newServings) {
-
   // Update recipie servings in state
   model.updateServings(newServings);
 

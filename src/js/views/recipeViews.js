@@ -129,7 +129,6 @@ class recipeViews extends View {
   }
 
   #generateMarkupIngredient(ing) {
-    console.log(ing.calories);
     return `
     <li class="recipe__ingredient">
       <svg class="recipe__icon">

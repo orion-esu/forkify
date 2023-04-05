@@ -8,6 +8,7 @@ import {
   KEY_ESUGABRIEL,
   KEY__JAJA,
   KEY__PRINCE,
+  KEY_NEHE
 } from './config';
 import { AJAX } from './helper';
 
@@ -103,7 +104,7 @@ export const getSearchResultPage = function (page = state.search.page) {
 export const updateServings = function (newservings) {
   state.recipe.ingredients.forEach(ing => {
     ing.quantity = (ing.quantity * newservings) / state.recipe.servings;
-    ing.calories = (
+    ing.calories = +(
       (ing.calories * newservings) /
       state.recipe.servings
     ).toFixed(2);
@@ -222,12 +223,12 @@ export const getIngredient = async function (recipe) {
   try {
     for (const ing of recipe.ingredients) {
       const data = await AJAX(
-        `https://api.spoonacular.com/food/ingredients/search?apiKey=${KEY_ORION2001}&query=${ing.description}`
+        `https://api.spoonacular.com/food/ingredients/search?apiKey=${KEY_NEHE}&query=${ing.description}`
       );
       if (data.results.length !== 0) {
         const id = data.results[0].id;
         const ingredientNutrient = await AJAX(
-          `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${KEY_ORION2001}&amount=${recipe.servings}`
+          `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${KEY_NEHE}&amount=${recipe.servings}`
         );
         const nutrients = ingredientNutrient.nutrition.nutrients;
 
@@ -236,7 +237,8 @@ export const getIngredient = async function (recipe) {
         ing.calories = butIng[0].amount;
       }
     }
-    recipe.totalCalories = totalCalories.toFixed(2);
+    recipe.totalCalories = +totalCalories.toFixed(2);
+    console.log(recipe.totalCalories);
   } catch (error) {
     throw error;
   }

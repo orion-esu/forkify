@@ -8,3 +8,4 @@ export const KEY_ORION2001 = 'b0599dff060f40648012ac7d5fad7b16';
 export const KEY_ESUGABRIEL = '1edd953c37b84ddf8b00c69cfab969cb';
 export const KEY__JAJA = '00b77d7e89124619b783064a635d108a';
 export const KEY__PRINCE = '00b77d7e89124619b783064a635d108a';
+export const KEY_NEHE = '4e3f543436a14389ab6607e57ae1182e';

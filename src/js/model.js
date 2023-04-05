@@ -218,26 +218,30 @@ export const uploadRecipe = async function (newRecipe) {
 };
 
 export const getIngredient = async function (recipe) {
+  let totalCalories = 0;
   try {
     for (const ing of recipe.ingredients) {
       const data = await AJAX(
-        `https://api.spoonacular.com/food/ingredients/search?apiKey=${KEY__JAJA}&query=${ing.description}`
+        `https://api.spoonacular.com/food/ingredients/search?apiKey=${KEY_ORION2001}&query=${ing.description}`
       );
       if (data.results.length !== 0) {
         const id = data.results[0].id;
         const ingredientNutrient = await AJAX(
-          `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${KEY__JAJA}&amount=${recipe.servings}`
+          `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${KEY_ORION2001}&amount=${recipe.servings}`
         );
         const nutrients = ingredientNutrient.nutrition.nutrients;
 
         const butIng = nutrients.filter(nutr => nutr.name === 'Calories');
+        totalCalories += butIng[0].amount;
         ing.calories = butIng[0].amount;
       }
     }
+    recipe.totalCalories = totalCalories.toFixed(2);
   } catch (error) {
     throw error;
   }
 };
+
 retrieveData();
 
 // LIstening for events in mvc using the publisher subscriber pattern. Events should be handled in the controller and should be listened for in the view otherwise DOM elements would be needed in the controller which would be bad practice.

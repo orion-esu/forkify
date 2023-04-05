@@ -103,6 +103,9 @@ class recipeViews extends View {
           .map(this.#generateMarkupIngredient)
           .join('')}
       </ul>
+      <p class="recipe__ingredient--totalCalories">Total calories: ${
+        this.returnData.totalCalories
+      }</p>
     </div>
 
     <div class="recipe__directions">

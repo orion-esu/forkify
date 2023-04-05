@@ -143,12 +143,17 @@
   &__ingredient {
     display: flex;
 
-  &--calories {
+    &--calories {
       font-weight: 700;
+    }
+
+    &--totalCalories{
+      font-weight: 700;
+      margin-top: 2rem;
     }
   }
 
-  &__description{
+  &__description {
     line-height: 1.6;
   }
 

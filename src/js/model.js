@@ -8,7 +8,7 @@ import {
   KEY_ESUGABRIEL,
   KEY__JAJA,
   KEY__PRINCE,
-  KEY_NEHE
+  KEY_NEHE,
 } from './config';
 import { AJAX } from './helper';
 
@@ -102,6 +102,8 @@ export const getSearchResultPage = function (page = state.search.page) {
 };
 
 export const updateServings = function (newservings) {
+  let totalCalories = 0;
+
   state.recipe.ingredients.forEach(ing => {
     ing.quantity = (ing.quantity * newservings) / state.recipe.servings;
     ing.calories = +(
@@ -110,8 +112,12 @@ export const updateServings = function (newservings) {
     ).toFixed(2);
 
     // nQT = (oQT * nServ) / oServ;
-  });
 
+    if (!isNaN(ing.calories)) {
+      totalCalories += ing.calories;
+    }
+  });
+  state.recipe.totalCalories = totalCalories.toFixed(2);
   state.recipe.servings = newservings;
 };
 
@@ -238,7 +244,6 @@ export const getIngredient = async function (recipe) {
       }
     }
     recipe.totalCalories = +totalCalories.toFixed(2);
-    console.log(recipe.totalCalories);
   } catch (error) {
     throw error;
   }

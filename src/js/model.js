@@ -27,9 +27,11 @@ const windowResize = function () {
   if (window.innerWidth < 800) {
     document.querySelector('.container').style.display = 'none';
     document.querySelector('.unresponsive').classList.remove('hidden');
+    document.querySelector('.meal__search').classList.add('hidden');
   } else {
     document.querySelector('.container').style.display = 'grid';
     document.querySelector('.unresponsive').classList.add('hidden');
+    document.querySelector('.meal__search').classList.remove('hidden');
   }
 };
 windowResize();

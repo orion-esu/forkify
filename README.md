@@ -1,8 +1,8 @@
 # Forkify Recipe App
 
-![Forkify Recipe App](src/img/screenshot.jpeg)
-
 The Forkify Recipe App is a web application that allows you to search for recipes, view their details, and save your favorite recipes. It provides a user-friendly interface to discover and explore a wide range of recipes from various sources.
+
+![Forkify Recipe App](src/img/screenshot.jpeg)
 
 ## Live Demo
 View the project live: [Forkify App](https://forkify-recipe0.netlify.app/)
